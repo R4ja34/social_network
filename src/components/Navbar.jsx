@@ -1,4 +1,19 @@
+import { useAtom } from "jotai";
+import { jwtAtom } from "../atoms/jwtAtom";
+import { useNavigate } from "react-router-dom";
+
 export default function Navbar() {
+  const [jwt, setJwt] = useAtom(jwtAtom);
+  const navigate = useNavigate();
+
+  // Fonction de déconnexion
+  const handleLogout = () => {
+    // Effacer le jeton JWT de l'état local
+    setJwt(null);
+    // Rediriger vers la page de connexion
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -19,8 +34,8 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/about">
-                About
+              <a className="nav-link" href="/profil">
+                Profile
               </a>
             </li>
             <li className="nav-item">
@@ -29,6 +44,11 @@ export default function Navbar() {
               </a>
             </li>
           </ul>
+          {jwt && (
+            <button onClick={handleLogout} className="btn btn-outline-danger">
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>

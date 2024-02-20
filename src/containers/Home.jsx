@@ -1,4 +1,6 @@
 import LoginForm from "../components/LoginForm";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export default function Home() {
   return (
@@ -13,6 +15,10 @@ export default function Home() {
           </div>
           <div className="col-md-8">
             <LoginForm />
+            {/* Utilisation du composant Link pour rediriger vers la page d'inscription */}
+            <Link to="/register">
+              <Button variant="secondary">Créer un compte</Button>
+            </Link>
           </div>
         </div>
       </div>
