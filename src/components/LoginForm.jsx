@@ -2,14 +2,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { jwtAtom } from "../atoms/jwtAtom";
-
+import Cookies from "js-cookie";
 function LoginForm() {
   // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [, setJwt] = useAtom(jwtAtom);
   const navigateTo = useNavigate();
   // comportement
   const handleSubmit = (event) => {
@@ -33,10 +30,11 @@ function LoginForm() {
       if (response.ok) {
         console.log("Login successful");
         const data = await response.json();
+        console.log(data);
+        console.log(data.user);
         const token = data.jwt;
-        setJwt(token);
-        console.log("data:", data);
-        console.log("token:", token);
+        Cookies.set("jwt", token);
+        console.log(Cookies.get("jwt")); // remplacer par un cookie
         navigateTo("/profil");
       } else {
         console.log("Login failed", response.statusText);
@@ -69,7 +67,7 @@ function LoginForm() {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+        connexion
       </Button>
     </Form>
   );
